@@ -42,7 +42,7 @@
        <table border="0">
          <tr>
            <td>Bill SubTotal: $ </td>
-           <td><input type="text" name="bill"></td>
+           <td><input type="text" name="bill" value = "<?php echo isset($_POST['bill']) ? $_POST['bill'] : '' ?>"></td>
          </tr><tr>
            <td>Tip Percentage:</td>
          </tr><tr>
@@ -51,7 +51,7 @@
            <td width="94px" height="41px"><input type="radio" name="percent" value="20">20%</td>
          </tr><tr>
            <td width="94px" height="41px"><input type="radio" name="customPercent" value="1">Custom Tip Percent: </td>
-           <td><input type ="text" name="custom"></td>
+           <td><input type ="text" name="custom" value = "<?php echo isset($_POST['custom']) ? $_POST['custom'] : '' ?>"></td>
          </tr><tr>
          </tr><tr>
          </tr><tr>
