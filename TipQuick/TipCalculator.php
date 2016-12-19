@@ -46,17 +46,45 @@
          </tr><tr>
            <td>Tip Percentage:</td>
          </tr><tr>
-           <td width="94px" height="41px"><input type="radio" name="percent" value="10">10%</td>
-           <td width="94px" height="41px"><input type="radio" name="percent" value="15">15%</td>
-           <td width="94px" height="41px"><input type="radio" name="percent" value="20">20%</td>
-         </tr><tr>
-           <td width="94px" height="41px"><input type="radio" name="customPercent" value="1">Custom Tip Percent: </td>
-           <td><input type ="text" name="custom" value = "<?php echo isset($_POST['custom']) ? $_POST['custom'] : '' ?>"></td>
+           <?php
+           $percent = array(10,15,20);
+           foreach ($percent as $value) {
+             $output ='<p class="radio">';
+                       $output .= '<input type="radio" class="spacing" name="percent" ';
+                          if(isset($_POST[$value])
+                              $output .='checked="Checked"';
+                          else
+                              $output .='';
+
+                              $output .='name="'.$name.'" value="'.$value.'">'.$value;
+                      }
+                      $output .='</p>';
+                      echo $output;
+           }
+
+
+
+            //
+            //  <td width="94px" height="41px"><input type="radio" name="percent" value="10" >10%</td>
+            //  <!-- <?php if (isset($_POST[ 'percent']) && $_POST[ 'percent']=='10' ){echo ' checked="checked"';}?> -->
+            //  <td width="94px" height="41px"><input type="radio" name="percent" value="15" >15%</td>
+            //  <!-- <?php if (isset($_POST[ 'percent']) && $_POST[ 'percent']=='15' ){echo ' checked="checked"';}?> -->
+            //  <td width="94px" height="41px"><input type="radio" name="percent" value="20" >20%</td>
+            //  <!-- <?php if (isset($_POST[ 'percent']) && $_POST[ 'percent']=='20' ){echo ' checked="checked"';}?> -->
+            // </tr><tr>
+             <td width="94px" height="41px"><input type="radio" name="customPercent" value="1" >Custom Tip Percent: </td>
+             <!-- <?php if (isset($_POST[ 'customPercent']) && $_POST[ 'customPercent']=='1' ){echo ' checked="checked"';}?> -->
+             <td><input type ="text" name="custom" value = "<?php echo isset($_POST['custom']) ? $_POST['custom'] : '' ?>"></td>           }
+
+           ?>
+
+
+
          </tr><tr>
          </tr><tr>
          </tr><tr>
            <td>split:</td>
-           <td><input type ="text" name = "split"> person(s)</td>
+           <td><input type ="text" name = "split" value = "<?php echo isset($_POST['split']) ? $_POST['split'] : '' ?>"> person(s) </td>
          </tr><tr>
          </tr><tr>
          </tr><tr>
@@ -70,70 +98,55 @@
 
 
 <?php
-if(isset($_POST['bill'], $_POST['split'], $_POST['percent'])){
-         echo "Bill: $".$_POST['bill'];
-         if($_POST['percent']<0) // Making sure that percentage doesnt go into negatives
-         $_POST['percent'] = 0; //If it does, set it to 0
-         if($_POST['custom']<0) // Making sure that percentage doesnt go into negatives
-         $_POST['custom'] = 0; //If it does, set it to 0
-         echo "<br/>Tip %: $".$_POST['percent'];
-         if($_POST['split']<1) //Just making sure this number isnt less than 1
-         $_POST['split'] = 1; //If it is, set it to 1 which is the default
-         echo "<br/>People: $".$_POST['split'];
-         echo "<br/>Tip amount: $".$tip = number_format($_POST['bill'] * $_POST['percent'] / 100, 2);
-         echo "<br/>Total: $".$total = $tip+$_POST['bill'];
-         echo "<br/>Total per Person: $".$total/$_POST['split'];
-}
 
-if(isset($_POST['bill'], $_POST['split'], $_POST['customPercent'], $_POST['custom'])){
-  echo "Bill: $".$_POST['bill'];
-  if(isset($_POST['customPercent']) && isset($_POST['custom'])){
+if(isset($_POST['bill'], $_POST['split'], $_POST['percent'])){
+  if(is_numeric($_POST['bill']) || is_numeric($_POST['split'])){
+    if($_POST['split']<1){
+      $_POST['split'] = 1; //If it is, set it to 1 which is the default
+      echo '<span style = "color: #b92b27; text-align:; "> Please Enter Number greater than zero. By default split = 1</span><br>';
+    } //Just making sure this number isnt less than 1
+
+
+    echo "Bill: $".$_POST['bill'];
+    if($_POST['percent']<0) // Making sure that percentage doesnt go into negatives
+    $_POST['percent'] = 0; //If it does, set it to 0
     if($_POST['custom']<0) // Making sure that percentage doesnt go into negatives
     $_POST['custom'] = 0; //If it does, set it to 0
-    echo "<br/>Tip %: $".$_POST['custom'];
-    if($_POST['split']<1) //Just making sure this number isnt less than 1
-    $_POST['split'] = 1; //If it is, set it to 1 which is the default
+    echo "<br/>Tip %: $".$_POST['percent'];
     echo "<br/>People: $".$_POST['split'];
-    echo "<br/>Tip amount: $".$tip = number_format($_POST['bill'] * $_POST['custom'] / 100, 2);
+    echo "<br/>Tip amount: $".$tip = number_format($_POST['bill'] * $_POST['percent'] / 100, 2);
     echo "<br/>Total: $".$total = $tip+$_POST['bill'];
     echo "<br/>Total per Person: $".$total/$_POST['split'];
-  }else{
-    echo "Please enter Custom Tip Value";
   }
 
+}//else{
+//   echo '<span style = "color: #b92b27; text-align:; "> Please Enter a Valid Number</span>';
+// }
+
+if(isset($_POST['bill'], $_POST['split'], $_POST['customPercent'], $_POST['custom'])){
+  if(is_numeric($_POST['bill']) || is_numeric($_POST['split'])){
+    if($_POST['split']<1) //Just making sure this number isnt less than 1
+    $_POST['split'] = 1; //If it is, set it to 1 which is the default
+     echo "Bill: $".$_POST['bill'];
+     if(isset($_POST['customPercent']) && isset($_POST['custom'])){
+     if($_POST['custom']<0){
+       // Making sure that percentage doesnt go into negatives
+       echo '<span style = "color: #b92b27; text-align:; "> Please Enter Number greater than zero. By default custom Tip = 0</span><br>';
+       $_POST['custom'] = 0; //If it does, set it to 0
+     }
+
+     echo "<br/>Tip %: $".$_POST['custom'];
+
+     echo "<br/>People: $".$_POST['split'];
+     echo "<br/>Tip amount: $".$tip = number_format($_POST['bill'] * $_POST['custom'] / 100, 2);
+     echo "<br/>Total: $".$total = $tip+$_POST['bill'];
+     echo "<br/>Total per Person: $".$total/$_POST['split'];
+     }else{
+     echo "Please enter Custom Tip Value";
+     }
+}
 }
 
-
-//Checks if all the required data has been acquired
-// if(isset($_POST['bill'], $_POST['percent'], $_POST['split'])){
-// 	//Checks if the data is numeric as it should be
-// 	// if(is_numeric($_POST['bill']) && is_numeric($_POST['custom']) && is_numeric($_POST['split']) ){
-// 		echo "Bill: ".$_POST['bill'];
-//
-//     if (isset($_POST['percent']) && (isset($_POST['custom']))) {
-//        if($_POST['custom']<0) // Making sure that percentage doesnt go into negatives
-//   		 	$_POST['custom'] = 0; //If it does, set it to 0
-//   		 echo "<br/>Tip %: ".$_POST['custom'];
-//   		 if($_POST['split']<1) //Just making sure this number isnt less than 1
-//   		 	$_POST['split'] = 1; //If it is, set it to 1 which is the default
-//   		 echo "<br/>People: ".$_POST['split'];
-//   		 echo "<br/>Tip amount: ".$tip = number_format($_POST['bill'] * $_POST['custom'] / 100, 2);
-//   		 echo "<br/>Total: ".$total = $tip+$_POST['bill'];
-//   		 echo "<br/>Total per Person: ".$total/$_POST['split'];
-//     } else {
-//     }
-//     if(isset($_POST['percent'])){
-//       //  if($_POST['percent']<0) // Making sure that percentage doesnt go into negatives
-//       //  $_POST['custom'] = 0; //If it does, set it to 0
-//        echo "<br/>Tip %: ".$_POST['percent'];
-//        if($_POST['split']<1) //Just making sure this number isnt less than 1
-//        $_POST['split'] = 1; //If it is, set it to 1 which is the default
-//        echo "<br/>People: ".$_POST['split'];
-//        echo "<br/>Tip amount: ".$tip = number_format($_POST['bill'] * $_POST['percent'] / 100, 2);
-//        echo "<br/>Total: ".$total = $tip+$_POST['bill'];
-//        echo "<br/>Total per Person: ".$total/$_POST['split'];
-//     }
-// }else echo "Please fill all the values";
 ?>
 </body>
 </div>

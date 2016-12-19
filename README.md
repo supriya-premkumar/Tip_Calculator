@@ -4,16 +4,16 @@
 
 Submitted by: **Supriya Premkumar**
 
-Time spent: **x** hours spent in total
+Time spent: **3** hours spent in total
 
 ## User Stories
 
 The following **required** functionality is complete:
 * [x] User can enter a bill amount, choose a tip percentage, and submit the form to see the tip and total values.
-* [ ] Tip percentage choices use a PHP loop to output three radio buttons.
+* [x] Tip percentage choices use a PHP loop to output three radio buttons.
 * [x] PHP code sets reasonable default values for the form.
-* [ ] PHP code confirms the presence and correct format of submitted values.
-* [ ] Page indicates any form errors which need to be fixed.
+* [x] PHP code confirms the presence and correct format of submitted values.
+* [x] Page indicates any form errors which need to be fixed.
 * [x] Submitted form values are retained when errors or results are shown.
 
 The following **optional** features are implemented:
@@ -28,7 +28,7 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/fE1lelh.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
